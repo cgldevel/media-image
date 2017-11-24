@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../hax-body-behaviors/hax-body-behaviors.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../lrnsys-layout/lrnsys-layout.html">
@@ -24,30 +25,17 @@ A LRN element
         --box-background-color: #f7f6ef;
       }
 
-      :host[card="true"] {
+      :host[card] {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.14);
         padding: 20px;
       }
 
-      :host[box="true"] {
+      :host[box] {
         background-color:var(--box-background-color);
         padding: 20px;
       }
 
-      :host[align="left"] {
-        float: left;
-      }
-
-      :host[align="center"] {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      :host[align="right"] {
-        float: right;
-      }
-
-      :host[round="true"] iron-image {
+      :host[round] iron-image {
         border-radius: 50%;
       }
 
@@ -90,8 +78,8 @@ A LRN element
       }
     </style>
 
-    <iron-image src="{{src}}"></iron-image>
-    <div class="citation">{{citation}}</div>
+    <iron-image src="[[src]]" alt="[[alt]]"></iron-image>
+    <div class="citation">[[citation]]</div>
     <div class="caption">
       <slot name="caption"></slot>
     </div>
@@ -100,9 +88,8 @@ A LRN element
 
   <script>
     Polymer({
-
       is: 'media-image',
-
+      behaviors: [HAXBehaviors.PropertiesBehaviors],
       properties: {
         /**
          * Image source.
@@ -119,11 +106,10 @@ A LRN element
           reflectToAttribute: true,
         },
         /**
-         * Image align (left, center, right).
+         * Image alt.
         */
-        align: {
+        alt: {
           type: String,
-          value: 'left',
           reflectToAttribute: true,
         },
         /**
@@ -138,28 +124,102 @@ A LRN element
          * The shape of the image (round).
         */
         round: {
-          type: String,
-          value: 'square',
+          type: Boolean,
+          value: false,
           reflectToAttribute: true,
         },
         /**
          * Applies card styling.
         */
         card: {
-          type: String,
-          value: 'false',
+          type: Boolean,
+          value: false,
           reflectToAttribute: true,
         },
         /**
          * Applies box styling.
         */
         box: {
-          type: String,
-          value: 'false',
+          type: Boolean,
+          value: false,
           reflectToAttribute: true,
         }
       },
-
+      /**
+       * Ready.
+       */
+      ready: function() {
+        // Establish hax properties if it exist
+        let props = {
+          'canScale': true,
+          'canPosition': true,
+          'settings': [
+            {
+              'property': 'src',
+              'title': 'Source',
+              'description': 'The URL for the image.',
+              'inputMethod': 'textfield',
+              'type': 'bar',
+              'icon': 'link',
+              'required': true,
+            },
+            {
+              'slot': 'caption',
+              'title': 'Caption',
+              'description': 'A caption to describe the image usage',
+              'inputMethod': 'textarea',
+              'type': 'bar',
+              'icon': 'av:call-to-action',
+            },
+            {
+              'property': 'citation',
+              'title': 'Citation',
+              'description': 'Citation for the image.',
+              'inputMethod': 'textfield',
+              'type': 'bar',
+              'icon': 'text-format',
+              'required': false,
+            },
+            {
+              'property': 'alt',
+              'title': 'Alternative text',
+              'description': 'Text to describe the image to non-sighted users.',
+              'inputMethod': 'textfield',
+              'type': 'bar',
+              'icon': 'link',
+              'required': false,
+            },
+            {
+              'property': 'round',
+              'title': 'Round image',
+              'description': 'Crops the image appearance to be circle in shape.',
+              'inputMethod': 'boolean',
+              'type': 'bar',
+              'icon': 'account',
+              'required': false,
+            },
+            {
+              'property': 'card',
+              'title': 'Card',
+              'description': 'Apply a drop shadow to give the appearance of being a raised card.',
+              'inputMethod': 'boolean',
+              'type': 'bar',
+              'icon': 'check-box-outline-blank',
+              'required': false,
+            },
+            {
+              'property': 'box',
+              'title': 'Box',
+              'description': 'Apply a visual box around the image.',
+              'inputMethod': 'boolean',
+              'type': 'bar',
+              'icon': 'image:crop-square',
+              'required': false,
+            }
+          ]
+        };
+        this.setHaxProperties(props);
+      },
     });
   </script>
 </dom-module>
