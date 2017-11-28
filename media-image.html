@@ -1,12 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../hax-body-behaviors/hax-body-behaviors.html">
+<link rel="import" href="../hax-behaviors/hax-behaviors.html">
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../lrnsys-layout/lrnsys-layout.html">
-<link rel="import" href="../lrnsys-layout/lrnsys-dialog.html">
-<link rel="import" href="../lrnsys-layout/lrnsys-dialog-toolbar.html">
-<link rel="import" href="../lrnsys-layout/lrnsys-dialog-toolbar-button.html">
-<link rel="import" href="../img-pan-zoom/img-pan-zoom.html">
 
 <!--
 `media-image`
@@ -79,7 +74,9 @@ A LRN element
     </style>
 
     <iron-image src="[[src]]" alt="[[alt]]"></iron-image>
-    <div class="citation">[[citation]]</div>
+    <div class="citation">
+      <slot name="citation"></slot>
+    </div>
     <div class="caption">
       <slot name="caption"></slot>
     </div>
@@ -95,13 +92,6 @@ A LRN element
          * Image source.
         */
         src: {
-          type: String,
-          reflectToAttribute: true,
-        },
-        /**
-         * Image citation.
-        */
-        citation: {
           type: String,
           reflectToAttribute: true,
         },
