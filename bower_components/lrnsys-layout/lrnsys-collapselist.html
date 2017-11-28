@@ -56,13 +56,15 @@
     <ul>
     <template is="dom-repeat" items="{{items}}" as="row">
       <li>
-      <paper-button on-tap="collapseToggle" id="collapse-trigger">
-        <iron-icon icon="[[row.icon]]"></iron-icon>
-        <span class="collapse-label">[[row.label]]</span>
-      </paper-button>
-      <iron-collapse id="collapse">
-        <div class="collapse-content">[[row.content]]</div>
-      </iron-collapse>
+        <lrnsys-collapselist-item>
+          <span slot="label">
+            <iron-icon icon="[[row.icon]]"></iron-icon>
+            <span class="collapse-label">[[row.label]]</span>
+          </span>
+          <span slot="content">
+            [[row.content]]
+          </span>
+        </lrnsys-collapselist-item>
       </li>
     </template>
     </ul>
@@ -79,12 +81,6 @@
           type: Array,
           notify: true,
         },
-      },
-      /**
-       * Toggling collapse on an iron element.
-       */
-      collapseToggle: function(e) {
-        e.target.nextElementSibling.toggle();
       }
     });
   </script>
