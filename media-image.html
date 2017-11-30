@@ -73,10 +73,8 @@ A LRN element
       }
     </style>
 
-    <iron-image src="[[src]]" alt="[[alt]]"></iron-image>
-    <div class="citation">
-      <slot name="citation"></slot>
-    </div>
+    <iron-image src$="[[source]]" alt$="[[alt]]"></iron-image>
+    <div class="citation">[[citation]]</div>
     <div class="caption">
       <slot name="caption"></slot>
     </div>
@@ -91,7 +89,14 @@ A LRN element
         /**
          * Image source.
         */
-        src: {
+        source: {
+          type: String,
+          reflectToAttribute: true,
+        },
+        /**
+         * Image citation.
+        */
+        citation: {
           type: String,
           reflectToAttribute: true,
         },
@@ -145,7 +150,7 @@ A LRN element
           'canPosition': true,
           'settings': [
             {
-              'property': 'src',
+              'property': 'source',
               'title': 'Source',
               'description': 'The URL for the image.',
               'inputMethod': 'textfield',
